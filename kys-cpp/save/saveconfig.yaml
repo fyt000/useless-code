@@ -1,0 +1,284 @@
+基础类型:
+  - &type_int 0
+  - &type_str 1
+  - &type_int_arr 2
+
+常量:
+  - 名: TEAMMATE_COUNT
+    数值: &TEAMMATE_COUNT 6
+  - 名:  ROLE_MAGIC_COUNT
+    数值: &ROLE_MAGIC_COUNT 10
+  - 名: ROLE_TAKING_ITEM_COUNT
+    数值: &ROLE_TAKING_ITEM_COUNT 4
+
+数据描述: 
+  - 
+    数据类型: [BaseInfo, 基本]
+    字段:
+      - 描述: [InShip, 乘船]
+      - 描述: [InSubMap, 子场景内]
+      - 描述: [MainMapX, 主地图X]
+      - 描述: [MainMapY, 主地图Y]
+      - 描述: [SubMapX, 子场景X]
+      - 描述: [SubMapY, 子场景Y]
+      - 描述: [FaceTowards, 面朝方向]
+      - 描述: [ShipX, 船X]
+      - 描述: [ShipY, 船Y]
+      - 描述: [ShipX1, 船X1]
+      - 描述: [ShipY1, 船Y1]
+      - 描述: [Encode, 内部编码]
+      - 描述: [Team, 队友]
+        类型: *type_int_arr
+        长度: *TEAMMATE_COUNT
+        引用: 人物
+        默认: -1
+  - 
+    数据类型: [ItemList, 背包]
+    字段:
+      - 描述: [item_id, 物品编号]
+        引用: 物品
+        默认: -1
+      - 描述: [count, 物品数量]
+
+  - 
+    数据类型: [RoleSave, 人物]
+    扩展类: Role
+    字段:
+      - 描述: [ID, 编号]
+      - 描述: [HeadID, 头像]
+      - 描述: [IncLife, 生命成长]
+      - 描述: [UnUse, 无用]
+      - 描述: [Name, 名字]
+        类型: *type_str
+        长度: 20
+      - 描述: [Nick, 外号]
+        类型: *type_str
+        长度: 20
+      - 描述: [Sexual, 性别]
+        注释: 性别 0-男 1 女 2 其他
+      - 描述: [Level, 等级]
+      - 描述: [Exp, 经验]
+      - 描述: [HP, 生命]
+      - 描述: [MaxHP, 生命最大值]
+      - 描述: [Hurt, 内伤]
+      - 描述: [Poison, 中毒]
+      - 描述: [PhysicalPower, 体力]
+      - 描述: [ExpForMakeItem, 物品修炼点数]
+      - 描述: [Equip0, 武器]
+        引用: 物品
+        默认: -1
+      - 描述: [Equip1, 防具]
+        引用: 物品
+        默认: -1
+      - 描述: [Frame, 动作帧数]
+        类型: *type_int_arr
+        长度: 15
+        注释: 动作帧数，改为不在此处保存，故实际无用，另外延迟帧数对效果几乎无影响，废弃
+      - 描述: [MPType, 内力性质]
+      - 描述: [MP, 内力]
+      - 描述: [MaxMP, 内力最大值]
+      - 描述: [Attack, 攻击力]
+      - 描述: [Speed, 轻功]
+      - 描述: [Defence, 防御力]
+      - 描述: [Medicine, 医疗]
+      - 描述: [UsePoison, 用毒]
+      - 描述: [Detoxification, 解毒]
+      - 描述: [AntiPoison, 抗毒]
+      - 描述: [Fist, 拳掌]
+      - 描述: [Sword, 御剑]
+      - 描述: [Knife, 耍刀]
+      - 描述: [Unusual, 特殊]
+      - 描述: [HiddenWeapon, 暗器]
+      - 描述: [Knowledge, 武学常识]
+      - 描述: [Morality, 品德]
+      - 描述: [AttackWithPoison, 攻击带毒]
+      - 描述: [AttackTwice, 左右互搏]
+      - 描述: [Fame, 声望]
+      - 描述: [IQ, 资质]
+      - 描述: [PracticeItem, 修炼物品]
+        引用: 物品
+        默认: -1
+      - 描述: [ExpForItem, 修炼点数]
+      - 描述: [MagicID, 所会武功]
+        类型: *type_int_arr
+        引用: 武功
+        长度: *ROLE_MAGIC_COUNT
+      - 描述: [MagicLevel, 武功等级]
+        类型: *type_int_arr
+        长度: *ROLE_MAGIC_COUNT
+      - 描述: [TakingItem, 携带物品]
+        引用: 物品
+        默认: -1
+        类型: *type_int_arr
+        长度: *ROLE_TAKING_ITEM_COUNT
+      - 描述: [TakingItemCount, 携带物品数量]
+        类型: *type_int_arr
+        长度: *ROLE_TAKING_ITEM_COUNT
+
+  -
+    数据类型: [ItemSave, &ItemSave 物品]
+    扩展类: Item
+    字段:
+      - 描述: [ID, 编号]
+      - 描述: [Name, 物品名]
+        类型: *type_str
+        长度: 40
+      - 描述: [Name1, 物品名无用]
+        类型: *type_int_arr
+        长度: 10
+      - 描述: [Introduction, 物品说明]
+        类型: *type_str
+        长度: 60
+      - 描述: [MagicID, 练出武功]
+        引用: 武功
+        # 这简直是反人类的设定 TODO 这个改成0应该没事
+        默认: -1
+      - 描述: [HiddenWeaponEffectID, 暗器动画编号]
+        默认: -1
+      - 描述: [User, 使用人]
+        引用: 人物
+        默认: -1
+      - 描述: [EquipType, 装备类型]
+        默认: -1
+      - 描述: [ShowIntroduction, 显示物品说明]
+      - 描述: [ItemType, 物品类型]
+        注释: 0剧情，1装备，2秘笈，3药品，4暗器
+      - 描述: [UnKnown5, 未知5]
+      - 描述: [UnKnown6, 未知6]
+      - 描述: [UnKnown7, 未知7]
+      - 描述: [AddHP, 加生命]
+      - 描述: [AddMaxHP, 加生命最大值]
+      - 描述: [AddPoison, 加中毒解毒]
+      - 描述: [AddPhysicalPower, 加体力]
+      - 描述: [ChangeMPType, 改变内力性质]
+        默认: -1
+      - 描述: [AddMP, 加内力]
+      - 描述: [AddMaxMP, 加内力最大值]
+      - 描述: [AddAttack, 加攻击力]
+      - 描述: [AddSpeed, 加轻功]
+      - 描述: [AddDefence, 加防御力]
+      - 描述: [AddMedicine, 加医疗]
+      - 描述: [AddUsePoison, 加使毒]
+      - 描述: [AddDetoxification, 加解毒]
+      - 描述: [AddAntiPoison, 加抗毒]
+      - 描述: [AddFist, 加拳掌]
+      - 描述: [AddSword, 加御剑]
+      - 描述: [AddKnife, 加耍刀]
+      - 描述: [AddUnusual, 加特殊兵器]
+      - 描述: [AddHiddenWeapon, 加暗器技巧]
+      - 描述: [AddKnowledge, 加武学常识]
+      - 描述: [AddMorality, 加品德]
+      - 描述: [AddAttackTwice, 加左右互搏]
+      - 描述: [AddAttackWithPoison, 加攻击带毒]
+      - 描述: [OnlySuitableRole, 仅修炼人物]
+        引用: 人物
+        默认: -1
+      - 描述: [NeedMPType, 需内力性质]
+      - 描述: [NeedMP, 需内力]
+      - 描述: [NeedAttack, 需攻击力]
+      - 描述: [NeedSpeed, 需轻功]
+      - 描述: [NeedUsePoison, 需用毒]
+      - 描述: [NeedMedicine, 需医疗]
+      - 描述: [NeedDetoxification, 需解毒]
+      - 描述: [NeedFist, 需拳掌]
+      - 描述: [NeedSword, 需御剑]
+      - 描述: [NeedKnife, 需耍刀]
+      - 描述: [NeedUnusual, 需特殊兵器]
+      - 描述: [NeedHiddenWeapon, 需暗器]
+      - 描述: [NeedIQ, 需资质]
+      - 描述: [NeedExp, 需经验]
+      - 描述: [NeedExpForMakeItem, 练出物品需经验]
+      - 描述: [NeedMaterial, 需材料]
+        引用: 物品
+        默认: -1
+      - 描述: [MakeItem, 练出物品]
+        类型: *type_int_arr
+        引用: 物品
+        默认: -1
+        长度: 5
+      - 描述: [MakeItemCount, 练出物品数量]
+        类型: *type_int_arr
+        长度: 5
+    
+  - 
+    数据类型: [SubMapInfoSave, 场景]
+    扩展类: SubMapInfo
+    字段:
+      - 描述: [ID, 编号]
+      - 描述: [Name, 名称]
+        类型: *type_str
+        长度: 20
+      - 描述: [ExitMusic, 出门音乐]
+      - 描述: [EntranceMusic, 进门音乐]
+        默认: -1
+      - 描述: [JumpSubMap, 跳转场景]
+        默认: -1
+      - 描述: [EntranceCondition, 进入条件]
+      - 描述: [MainEntranceX1, 外景入口X1]
+      - 描述: [MainEntranceY1, 外景入口Y1]
+      - 描述: [MainEntranceX2, 外景入口X2]
+      - 描述: [MainEntranceY2, 外景入口Y2]
+      - 描述: [EntranceX, 入口X]
+      - 描述: [EntranceY, 入口Y]
+      - 描述: [ExitX, 出口X]
+        类型: *type_int_arr
+        默认: -1
+        长度: 3
+      - 描述: [ExitY, 出口Y]
+        类型: *type_int_arr
+        默认: -1
+        长度: 3
+      - 描述: [JumpX, 跳转X]
+      - 描述: [JumpY, 跳转Y]
+      - 描述: [JumpReturnX, 跳转返还X]
+      - 描述: [JumpReturnY, 跳转返还Y]
+
+  -
+    数据类型: [MagicSave, 武功]
+    扩展类: Magic
+    字段:
+      - 描述: [ID, 编号]
+      - 描述: [Name, 名称]
+        类型: *type_str
+        长度: 20
+      - 描述: [Unknown, 未知]
+        类型: *type_int_arr
+        长度: 5        
+      - 描述: [SoundID, 出招音效]
+      - 描述: [MagicType, 武功类型]
+      - 描述: [EffectID, 武功动画]
+      - 描述: [HurtType, 伤害类型]
+      - 描述: [AttackAreaType, 攻击范围类型]
+      - 描述: [NeedMP, 消耗内力]
+      - 描述: [WithPoison, 敌人中毒]
+      - 描述: [Attack, 威力]
+        类型: *type_int_arr
+        长度: 10
+      - 描述: [SelectDistance, 移动范围]
+        类型: *type_int_arr
+        长度: 10
+      - 描述: [AttackDistance, 杀伤范围]
+        类型: *type_int_arr
+        长度: 10
+      - 描述: [AddMP, 加内力]
+        类型: *type_int_arr
+        长度: 10      
+      - 描述: [HurtMP, 杀伤内力]
+        类型: *type_int_arr
+        长度: 10      
+
+  -
+    数据类型: [ShopSave, 商店]
+    扩展类: Shop
+    字段:
+      - 描述: [ItemID, 物品编号]
+        类型: *type_int_arr
+        引用: 物品
+        长度: 5
+        默认: -1
+      - 描述: [Total, 物品总量]
+        类型: *type_int_arr
+        长度: 5
+      - 描述: [Price, 物品价格]
+        类型: *type_int_arr
+        长度: 5
