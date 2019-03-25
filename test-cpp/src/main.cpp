@@ -2,7 +2,6 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
-#include <boost/hana.hpp>
 
 template <typename K>
 class hetero_map
@@ -12,27 +11,27 @@ class hetero_map
     template <typename T>
     const T &get(K id)
     {
-        return internal_<T>[this].at(id);
+        return get_map<T>()[this].at(id);
     }
     template <typename T>
     void get_to(K id, T &t)
     {
-        t = internal_<T>[this].at(id);
+        t = get_map<T>()[this].at(id);
     }
     template <typename T>
     void put(K id, T &&t)
     {
-        internal_<T>[this].emplace(id, std::forward<T>(t));
+        get_map<T>()[this].emplace(id, std::forward<T>(t));
     }
 
   private:
     template <typename T>
-    static std::unordered_map<const hetero_map<K> *, std::unordered_map<K, T>> internal_;
+    auto &get_map()
+    {
+        static std::unordered_map<const hetero_map<K> *, std::unordered_map<K, T>> internal;
+        return internal;
+    }
 };
-
-template <typename K>
-template <typename T>
-std::unordered_map<const hetero_map<K> *, std::unordered_map<K, T>> hetero_map<K>::internal_;
 
 int main()
 {

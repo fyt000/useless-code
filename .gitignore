@@ -1,2 +1,2 @@
-test-cpp/.vscode/*
-test-cpp/build/*
+**/.vscode/*
+*/build/*
